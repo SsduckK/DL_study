@@ -7,7 +7,7 @@ from dataset.mnist import load_mnist
 from trainer_neuralnet import *
 import pickle
 from collections import OrderedDict
-from common.layers import *
+from edit_layer import *
 
 
 class DeepConvNet:

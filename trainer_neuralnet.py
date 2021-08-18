@@ -80,3 +80,8 @@ class Trainer:
         if self.verbose:
             print("=============== Final Test Accuracy ===============")
             print("test acc:" + str(test_acc))
+
+            with open("/home/nuc/DL_study/result.txt", 'a+') as file:
+                dict_result = {'test acc': test_acc}
+                file.writelines(str(dict_result))
+

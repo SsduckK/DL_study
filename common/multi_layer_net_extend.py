@@ -79,7 +79,8 @@ class MultiLayerNetExtend:
             self.params['W' + str(idx)] = scale * np.random.randn(all_size_list[idx-1], all_size_list[idx])
             self.params['b' + str(idx)] = np.zeros(all_size_list[idx])
 
-    def predict(self, x, train_flg=False):
+    def \
+            predict(self, x, train_flg=False):
         for key, layer in self.layers.items():
             if "Dropout" in key or "BatchNorm" in key:
                 x = layer.forward(x, train_flg)

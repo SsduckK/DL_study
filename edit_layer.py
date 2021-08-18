@@ -213,9 +213,6 @@ class Convolution:
         self.dW = None
         self.db = None
 
-        #연산 횟수
-        self.calculate_count = 0
-
     def forward(self, x):
         FN, C, FH, FW = self.W.shape
         N, C, H, W = x.shape

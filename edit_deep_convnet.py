@@ -39,7 +39,6 @@ class DeepConvNet:
         pre_node_nums = self.make_relu_init_array()
         wight_init_scales = np.sqrt(2.0 / pre_node_nums)  # ReLU를 사용할 때의 권장 초깃값
 
-
         self.params = {}
         pre_channel_num = input_dim[0]
         for idx, conv_param in enumerate(self.conv_list):

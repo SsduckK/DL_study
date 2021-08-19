@@ -24,12 +24,10 @@ class DeepConvNet:
         # 가중치 초기화===========
         # 각 층의 뉴런 하나당 앞 층의 몇 개 뉴런과 연결되는가（TODO: 자동 계산되게 바꿀 것）
         self.conv_list = conv_list
-
-        pre_node_nums = np.array(
-            [1 * 3 * 3, 16 * 3 * 3, 16 * 3 * 3, 32 * 3 * 3, 32 * 3 * 3, 64 * 3 * 3, 64 * 4 * 4, hidden_size])
-        wight_init_scales = np.sqrt(2.0 / pre_node_nums)  # ReLU를 사용할 때의 권장 초깃값
-        self.make_conv_params()
         self.cnt = 0
+        self.hidden_size = hidden_size
+
+        self.make_conv_params()
 
         self.conv_list[0] = {'filter_num': 16, 'filter_size': 3, 'pad': 1, 'stride': 1}
         self.conv_list[1] = {'filter_num': 16, 'filter_size': 3, 'pad': 1, 'stride': 1}
@@ -37,6 +35,10 @@ class DeepConvNet:
         self.conv_list[3] = {'filter_num': 32, 'filter_size': 3, 'pad': 2, 'stride': 1}
         self.conv_list[4] = {'filter_num': 64, 'filter_size': 3, 'pad': 1, 'stride': 1}
         self.conv_list[5] = {'filter_num': 64, 'filter_size': 3, 'pad': 1, 'stride': 1}
+
+        pre_node_nums = self.make_relu_init_array()
+        wight_init_scales = np.sqrt(2.0 / pre_node_nums)  # ReLU를 사용할 때의 권장 초깃값
+
 
         self.params = {}
         pre_channel_num = input_dim[0]
@@ -68,6 +70,14 @@ class DeepConvNet:
         for list in range(0, params):
             self.conv_list.append(list)
         return self.conv_list
+
+    def make_relu_init_array(self):
+        init_array = np.arange(len(self.conv_list) + 2)
+        init_array[0] = (1 * self.conv_list[0]['filter_size'] ** 2)
+        for i in range(0, len(self.conv_list)):
+            init_array[i + 1] = (self.conv_list[i]['filter_num'] * self.conv_list[i]['filter_size'] ** 2)
+        init_array[-1] = self.hidden_size
+        return init_array
 
     def conv_relu_Pooling(self, layer):
         for i in range(1, 3):
